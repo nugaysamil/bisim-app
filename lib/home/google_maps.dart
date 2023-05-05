@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
 import 'dart:math';
 
@@ -43,68 +45,6 @@ class MapSampleState extends ConsumerState<MapSample> {
         desiredAccuracy: LocationAccuracy.low);
   }
 
-  double calculateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var a = 0.5 -
-        cos((lat2 - lat1) * p) / 2 +
-        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
-  }
-
-  LatLng startLocation = LatLng(27.6683619, 85.3101895);
-  LatLng endLocation = LatLng(27.6875436, 85.2751138);
-
-  PolylinePoints polylinePoints = PolylinePoints();
-
-  List<LatLng> polylineCoordinates = [];
-
-  /* getDirections() async {
-    List<LatLng> polylineCoordinates = [];
-
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      "AIzaSyC0FxhPnz3hEz1-SDFhS2dIc5Ld6CaK7n4",
-      PointLatLng(startLocation.latitude, startLocation.longitude),
-      PointLatLng(endLocation.latitude, endLocation.longitude),
-      travelMode: TravelMode.driving,
-    ); */
-
-  /*   if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-    } else {
-      print(result.errorMessage);
-    }
-
-    double totalDistance = 0;
-
-    for (var i = 0; i < polylineCoordinates.length - 1; i++) {
-      totalDistance += calculateDistance(
-          polylineCoordinates[i].latitude,
-          polylineCoordinates[i].longitude,
-          polylineCoordinates[i + 1].latitude,
-          polylineCoordinates[i + 1].longitude);
-    }
-    print(totalDistance);  */
-/* 
-    addPolyLine(List<LatLng> polylineCoordinates) {
-      PolylineId id = PolylineId("poly");
-      Polyline polyline = Polyline(
-        polylineId: id,
-        color: Colors.deepPurpleAccent,
-        points: polylineCoordinates,
-        width: 8,
-      );
-      polylines[id] = polyline;
-      setState(() {});
-    }
-
-    setState(() {
-      distance = totalDistance;
-    });
-
-    addPolyLine(polylineCoordinates);  */
-
   @override
   void initState() {
     getLocation();
@@ -122,6 +62,8 @@ class MapSampleState extends ConsumerState<MapSample> {
         ImageConfiguration(), "assets/location-2.png");
   }
 
+  double zoomVal = 5.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,6 +80,12 @@ class MapSampleState extends ConsumerState<MapSample> {
               controller.setMapStyle(mapTheme);
               _controller.complete(controller);
             },
+          ),
+          Column(
+            children: [
+              _zoomplusFunction(),
+              _zoominusfunction(),
+            ],
           ),
           ref.watch(singleUserDataProvider).when(
             data: (data) {
@@ -176,7 +124,7 @@ class MapSampleState extends ConsumerState<MapSample> {
               return (Text('Error'));
             },
             error: (((error, stackTrace) {
-              return Text(error.toString());
+              return Text(''.toString());
             })),
             loading: () {
               return const CircularProgressIndicator();
@@ -186,6 +134,61 @@ class MapSampleState extends ConsumerState<MapSample> {
       ),
     );
   }
+
+  Widget _zoominusfunction() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: IconButton(
+        iconSize: 35,
+        icon: Icon(
+          Icons.zoom_out,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          zoomVal--;
+          _minus(zoomVal);
+        },
+      ),
+    );
+  }
+
+  Widget _zoomplusFunction() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: IconButton(
+        iconSize: 35,
+        icon: Icon(
+          Icons.zoom_in,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          zoomVal++;
+          _minus(zoomVal);
+        },
+      ),
+    );
+  }
+
+  Future<void> _minus(double zoomVal) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(38.432, 27.1368), zoom: zoomVal),
+      ),
+    );
+  }
+
+  Future<void> _plus(double zoomVal) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(38.432, 27.1368), zoom: zoomVal),
+      ),
+    );
+  }
+}
+
+
 
 /*  var distance;
     Marker closestMarker = _markers.first;
@@ -211,4 +214,3 @@ class MapSampleState extends ConsumerState<MapSample> {
       }
     }
     print("The closess  " + _closestDistance.toString()); */
-}

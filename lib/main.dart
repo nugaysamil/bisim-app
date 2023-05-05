@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yenibisim/home/google_maps.dart';
-import 'package:yenibisim/model/model.dart';
-import 'package:yenibisim/services/current_location.dart';
 
-import 'home/home_page.dart';
 
 void main() async {
   runApp(const ProviderScope(child: MyApp()));
