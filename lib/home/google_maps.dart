@@ -1,17 +1,20 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:async';
-import 'dart:math';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yenibisim/initalize/app_builder.dart';
+import 'package:yenibisim/widgets/bottom_navigation_bar.dart';
 
 import '../data_provider/data_provider.dart';
 import '../widgets/build_sheet.dart';
 import 'package:geolocator/geolocator.dart';
+
+import 'announcement_widget.dart';
+import 'menu_items.dart';
 
 class MapSample extends ConsumerStatefulWidget {
   const MapSample({super.key});
@@ -23,7 +26,6 @@ class MapSample extends ConsumerStatefulWidget {
 double distance = 0.0;
 
 Set<Marker> _markers = {};
-Map<PolylineId, Polyline> polylines = {}; //polylines to show direction
 
 class MapSampleState extends ConsumerState<MapSample> {
   final Completer<GoogleMapController> _controller =
@@ -63,7 +65,6 @@ class MapSampleState extends ConsumerState<MapSample> {
   }
 
   double zoomVal = 5.0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +122,7 @@ class MapSampleState extends ConsumerState<MapSample> {
                 j += 1;
               }
 
-              return (Text('Error'));
+              return (Text(''));
             },
             error: (((error, stackTrace) {
               return Text(''.toString());
@@ -129,6 +130,48 @@ class MapSampleState extends ConsumerState<MapSample> {
             loading: () {
               return const CircularProgressIndicator();
             },
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              NavigatorBar(),
+            ],
+          ),
+          Positioned(
+            bottom: 110.0,
+            right: 160.0,
+            child: FloatingActionButton.large(
+              elevation: 10,
+              backgroundColor: Colors.green,
+              onPressed: () {},
+              child: Text(
+                'KİRALA',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 110.0,
+            right: 20.0,
+            child: FloatingActionButton(
+              elevation: 20,
+              backgroundColor: Colors.white,
+              onPressed: () {},
+              child: Image.asset('assets/icons/cycle.png'),
+            ),
+          ),
+          Positioned(
+            bottom: 110.0,
+            right: 360.0,
+            child: FloatingActionButton(
+              elevation: 10,
+              backgroundColor: Colors.white,
+              onPressed: () {},
+              child: Image.asset('assets/icons/settings.png'),
+            ),
           ),
         ],
       ),
