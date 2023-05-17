@@ -19,7 +19,7 @@ class _CreditCardState extends State<CreditCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade900,
         title: Text('Kredi Yükle'),
       ),
       body: Padding(

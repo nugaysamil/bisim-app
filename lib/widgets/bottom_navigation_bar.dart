@@ -6,15 +6,14 @@ import '../home/google_maps.dart';
 import '../home/menu_items.dart';
 
 class NavigatorBar extends StatefulWidget {
-  final int selectedPageIndex;
 
-  const NavigatorBar({Key? key, this.selectedPageIndex = 0}) : super(key: key);
+  const NavigatorBar({Key? key,}) : super(key: key);
 
   @override
   State<NavigatorBar> createState() => _NavigatorBarState();
 }
 
-var pagesList = [MenuItems(), AnnoucmentWidget(), MapSample()];
+//var pagesList = [MenuItems(), AnnoucmentWidget(), MapSample()];
 
 class _NavigatorBarState extends State<NavigatorBar> {
   @override
@@ -38,7 +37,6 @@ class _NavigatorBarState extends State<NavigatorBar> {
       ],
       elevation: 0,
       iconSize: 30,
-      currentIndex: widget.selectedPageIndex,
       onTap: (value) {
         
         

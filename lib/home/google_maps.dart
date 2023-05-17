@@ -10,6 +10,7 @@ import 'package:yenibisim/initalize/app_builder.dart';
 import 'package:yenibisim/widgets/bottom_navigation_bar.dart';
 
 import '../data_provider/data_provider.dart';
+import '../widgets/alert_dialog_widget.dart';
 import '../widgets/build_sheet.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -136,14 +137,16 @@ class MapSampleState extends ConsumerState<MapSample> {
             children: [
               NavigatorBar(),
             ],
-          ),
+          ), 
           Positioned(
             bottom: 110.0,
             right: 160.0,
             child: FloatingActionButton.large(
               elevation: 10,
               backgroundColor: Colors.green,
-              onPressed: () {},
+              onPressed: () {
+                _dialogBuilder(context);
+              },
               child: Text(
                 'KİRALA',
                 style: TextStyle(
@@ -229,7 +232,56 @@ class MapSampleState extends ConsumerState<MapSample> {
       ),
     );
   }
+  Future<void> _dialogBuilder(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text(
+          'Kiralama Yöntemi Seçin',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        content: SizedBox(
+          width: 150,
+          height: 180,
+          child: Column(
+            children: [
+              FilledButton(
+                onPressed: () {},
+                child: Text(
+                  'Tek şifre girin',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ),
+              SizedBox(height: 8),
+              FilledButton(
+                onPressed: () {},
+                child: Text(
+                  'Qr kod ile Kirala',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge
+                ),
+                child: const Text('Kapat'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+} 
+
 }
+
+
+
 
 
 
