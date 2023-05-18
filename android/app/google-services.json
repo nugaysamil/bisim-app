@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832600825780",
+    "project_id": "bisim-app-e76f1",
+    "storage_bucket": "bisim-app-e76f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832600825780:android:2509e82382eaef05ebdce1",
+        "android_client_info": {
+          "package_name": "com.example.yenibisim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832600825780-ggpo96ag93ihv2dfefhjkunpkf14rfva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBljA4F4K3nVpduSkzLxF4TPQF6qzJPwk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832600825780-ggpo96ag93ihv2dfefhjkunpkf14rfva.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
