@@ -1,34 +1,29 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:async';
-import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:yenibisim/initalize/app_builder.dart';
-import 'package:yenibisim/widgets/bottom_navigation_bar.dart';
 
 import '../data_provider/data_provider.dart';
-import '../widgets/alert_dialog_widget.dart';
-import '../widgets/build_sheet.dart';
-import 'package:geolocator/geolocator.dart';
+import '../initalize/app_bar.dart';
+import 'build_sheet.dart';
 
-import 'announcement_widget.dart';
-import 'menu_items.dart';
-
-class MapSample extends ConsumerStatefulWidget {
-  const MapSample({super.key});
+class GoogleMaps extends ConsumerStatefulWidget {
+  const GoogleMaps({super.key});
 
   @override
-  MapSampleState createState() => MapSampleState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _GoogleMapsState();
 }
 
 double distance = 0.0;
 
 Set<Marker> _markers = {};
 
-class MapSampleState extends ConsumerState<MapSample> {
+class _GoogleMapsState extends ConsumerState<GoogleMaps> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   BitmapDescriptor? markerIcon;
@@ -132,15 +127,9 @@ class MapSampleState extends ConsumerState<MapSample> {
               return const CircularProgressIndicator();
             },
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              NavigatorBar(),
-            ],
-          ), 
           Positioned(
-            bottom: 110.0,
-            right: 160.0,
+            bottom: 10.0,
+            right: 170.0,
             child: FloatingActionButton.large(
               elevation: 10,
               backgroundColor: Colors.green,
@@ -157,8 +146,8 @@ class MapSampleState extends ConsumerState<MapSample> {
             ),
           ),
           Positioned(
-            bottom: 110.0,
-            right: 20.0,
+            bottom: 10.0,
+            right: 10.0,
             child: FloatingActionButton(
               elevation: 20,
               backgroundColor: Colors.white,
@@ -167,7 +156,7 @@ class MapSampleState extends ConsumerState<MapSample> {
             ),
           ),
           Positioned(
-            bottom: 110.0,
+            bottom: 10.0,
             right: 360.0,
             child: FloatingActionButton(
               elevation: 10,
@@ -232,80 +221,49 @@ class MapSampleState extends ConsumerState<MapSample> {
       ),
     );
   }
+
   Future<void> _dialogBuilder(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text(
-          'Kiralama Yöntemi Seçin',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        content: SizedBox(
-          width: 150,
-          height: 180,
-          child: Column(
-            children: [
-              FilledButton(
-                onPressed: () {},
-                child: Text(
-                  'Tek şifre girin',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-              ),
-              SizedBox(height: 8),
-              FilledButton(
-                onPressed: () {},
-                child: Text(
-                  'Qr kod ile Kirala',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge
-                ),
-                child: const Text('Kapat'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Kiralama Yöntemi Seçin',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-        ),
-      );
-    },
-  );
-} 
-
+          content: SizedBox(
+            width: 150,
+            height: 180,
+            child: Column(
+              children: [
+                FilledButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Tek şifre girin',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 8),
+                FilledButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Qr kod ile Kirala',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                      textStyle: Theme.of(context).textTheme.labelLarge),
+                  child: const Text('Kapat'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
-
-
-
-
-
-
-/*  var distance;
-    Marker closestMarker = _markers.first;
-
-    _closestDistance = Geolocator.distanceBetween(
-        position.latitude,
-        position.longitude,
-        _markers.elementAt(0).position.latitude,
-        _markers.elementAt(0).position.longitude);
-
-    for (int i = 0; i < _markers.length; i++) {
-      distance = Geolocator.distanceBetween(
-          position.latitude,
-          position.longitude,
-          _markers.elementAt(i).position.latitude,
-          _markers.elementAt(i).position.longitude);
-
-      print(distance);
-
-      if (distance < _closestDistance) {
-        closestMarker = _markers.elementAt(i);
-        _closestDistance = distance;
-      }
-    }
-    print("The closess  " + _closestDistance.toString()); */

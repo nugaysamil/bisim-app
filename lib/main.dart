@@ -2,9 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yenibisim/home/google_maps.dart';
 
 import 'firebase_options.dart';
+import 'initalize/app_initialize.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

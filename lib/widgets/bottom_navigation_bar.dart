@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../home/announcement_widget.dart';
-import '../home/google_maps.dart';
-import '../home/menu_items.dart';
 
 class NavigatorBar extends StatefulWidget {
 
