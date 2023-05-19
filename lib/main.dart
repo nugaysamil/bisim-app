@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yenibisim/pages/login_page.dart';
 
 import 'firebase_options.dart';
 import 'initalize/app_initialize.dart';
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MapSample(),
+      home: LoginPage(),
+      //home: MapSample(),
     );
   }
 }
