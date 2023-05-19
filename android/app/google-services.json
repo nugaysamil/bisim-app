@@ -29,6 +29,13 @@
             {
               "client_id": "832600825780-ggpo96ag93ihv2dfefhjkunpkf14rfva.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "832600825780-kivsgn5e4va2dlghndpemm9jn52ik9ru.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.samilnugay.yenibisim"
+              }
             }
           ]
         }
