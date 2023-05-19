@@ -47,6 +47,7 @@ dependencies:
   kartal: ^2.8.0
   firebase_core: ^2.13.0
   firebase_auth: ^4.5.0
+  image_picker: ^0.8.7+5
 
 
 

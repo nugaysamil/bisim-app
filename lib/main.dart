@@ -8,6 +8,7 @@ import 'package:yenibisim/pages/login_page.dart';
 import 'package:yenibisim/pages/register_page.dart';
 
 import 'firebase_options.dart';
+import 'home/menu_items.dart';
 import 'initalize/app_initialize.dart';
 
 void main() async {

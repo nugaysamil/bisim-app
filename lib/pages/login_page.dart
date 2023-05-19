@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void signIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailTextController.text.trim(),
-        password: passwordTextController.text.trim());
+        email: emailTextController.text.toString(),
+        password: passwordTextController.text.toString());
   }
 
   @override
