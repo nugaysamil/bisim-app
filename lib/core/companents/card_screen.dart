@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:yenibisim/initalize/app_initialize.dart';
 
-
+import '../../home/core/fault_notification_widget.dart';
+import '../../model/card_info_model.dart';
+import '../../product/constant/string_constant.dart';
 import '../../widgets/button_widget.dart';
 import 'input_formatters.dart';
 
@@ -13,7 +17,25 @@ class CardScreen extends StatefulWidget {
 }
 
 class _CardScreenState extends State<CardScreen> {
+
   TextEditingController cardNumberController = TextEditingController();
+  final cardController = TextEditingController();
+  final nameController = TextEditingController();
+  final cvController = TextEditingController();
+  final dateController = TextEditingController();
+
+  void saveDataToFirebase() {
+    CollectionReference collRef =
+        FirebaseFirestore.instance.collection('cards');
+
+    collRef.add({
+      'cardNumber': cardController.text,
+      'fullName': nameController.text,
+      'cvv': cvController.text,
+      'expirationDate': dateController.text,
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +47,7 @@ class _CardScreenState extends State<CardScreen> {
             child: Column(
               children: [
                 TextFormField(
+                  controller: cardController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
@@ -42,6 +65,7 @@ class _CardScreenState extends State<CardScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: TextFormField(
+                    controller: nameController,
                     decoration: InputDecoration(
                       hintText: 'Full name',
                       prefixIcon: Padding(
@@ -57,6 +81,7 @@ class _CardScreenState extends State<CardScreen> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        controller: cvController,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(4),
@@ -79,6 +104,7 @@ class _CardScreenState extends State<CardScreen> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        controller: dateController,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(5),
@@ -101,7 +127,25 @@ class _CardScreenState extends State<CardScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                ButtonWidget()
+                FilledButton(
+                  onPressed: () {
+                    saveDataToFirebase();
+                  },
+                  child: Text(
+                    'Yükle',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.blue.shade900,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 165,
+                    ),
+                  ),
+                ),
               ],
             ),
           )

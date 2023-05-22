@@ -1,14 +1,23 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, unused_field, unused_element
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:yenibisim/core/credit_card_loading.dart';
+import 'package:yenibisim/home/core/fault_notification_widget.dart';
+import 'package:yenibisim/product/constant/string_constant.dart';
+import 'package:yenibisim/widgets/bicycle_list_details.dart';
+import 'package:yenibisim/widgets/button_widget.dart';
 
 import '../data_provider/data_provider.dart';
+import '../home/core/credit_card_password.dart';
 import '../initalize/app_bar.dart';
 import 'build_sheet.dart';
 
@@ -80,6 +89,19 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
           ),
           Column(
             children: [
+              Container(
+                color: Colors.grey.shade300,
+                child: ButtonWidget(
+                    changeString: StringConstants.creditName,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreditCard(),
+                        ),
+                      );
+                    }),
+              ),
               _zoomplusFunction(),
               _zoominusfunction(),
             ],
@@ -131,6 +153,7 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
             bottom: 10.0,
             right: 170.0,
             child: FloatingActionButton.large(
+              heroTag: null,
               elevation: 10,
               backgroundColor: Colors.green,
               onPressed: () {
@@ -149,9 +172,16 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
             bottom: 10.0,
             right: 10.0,
             child: FloatingActionButton(
+              heroTag: null,
               elevation: 20,
               backgroundColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BicycleListDetails(),
+                    ));
+              },
               child: Image.asset('assets/icons/cycle.png'),
             ),
           ),
@@ -159,9 +189,12 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
             bottom: 10.0,
             right: 360.0,
             child: FloatingActionButton(
+              heroTag: null,
               elevation: 10,
               backgroundColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+               
+              },
               child: Image.asset('assets/icons/settings.png'),
             ),
           ),
@@ -237,7 +270,22 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
             child: Column(
               children: [
                 FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: ((BuildContext context) {
+                        return AlertDialog(
+                          title: Align(
+                              alignment: Alignment.center,
+                              child: Text('Yetersiz bakiye')),
+                          content: SizedBox(
+                            width: 150,
+                            height: 180,
+                          ),
+                        );
+                      }),
+                    );
+                  },
                   child: Text(
                     'Tek şifre girin',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
@@ -245,7 +293,9 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
                 ),
                 SizedBox(height: 8),
                 FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _pickCamera(ImageSource.camera);
+                  },
                   child: Text(
                     'Qr kod ile Kirala',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
@@ -265,5 +315,21 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
         );
       },
     );
+  }
+
+  File? _image;
+  Future _pickCamera(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+
+      final imageTemporary = File(image.path);
+
+      setState(() {
+        this._image = imageTemporary;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
   }
 }

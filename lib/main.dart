@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yenibisim/auth/auth.dart';
 import 'package:yenibisim/auth/login_or_register.dart';
+import 'package:yenibisim/home/core/fault_notification_widget.dart';
+import 'package:yenibisim/model/model.dart';
 import 'package:yenibisim/pages/login_page.dart';
 import 'package:yenibisim/pages/register_page.dart';
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthPage(),
+      home: MapSample(),
       //home: MapSample(),
     );
   }

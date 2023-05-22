@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yenibisim/auth/login_or_register.dart';
-import 'package:yenibisim/pages/home_page.dart';
-import 'package:yenibisim/pages/register_page.dart';
 
 import '../initalize/app_initialize.dart';
 

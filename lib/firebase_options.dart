@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,15 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCG1SGYAYbUJoRhl4Zs8Ud25G5c5vqftLU',
+    appId: '1:832600825780:web:18f16c6f49dd2247ebdce1',
+    messagingSenderId: '832600825780',
+    projectId: 'bisim-app-e76f1',
+    authDomain: 'bisim-app-e76f1.firebaseapp.com',
+    storageBucket: 'bisim-app-e76f1.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBljA4F4K3nVpduSkzLxF4TPQF6qzJPwk0',
     appId: '1:832600825780:android:2509e82382eaef05ebdce1',
@@ -65,5 +68,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'bisim-app-e76f1.appspot.com',
     iosClientId: '832600825780-kivsgn5e4va2dlghndpemm9jn52ik9ru.apps.googleusercontent.com',
     iosBundleId: 'com.samilnugay.yenibisim',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAp1TKJin7jMwdNmbLv728VjcS3AF-zAiE',
+    appId: '1:832600825780:ios:e99ad18577d18388ebdce1',
+    messagingSenderId: '832600825780',
+    projectId: 'bisim-app-e76f1',
+    storageBucket: 'bisim-app-e76f1.appspot.com',
+    iosClientId: '832600825780-97kvhlptf93g90vrfodu30246cb9k0aj.apps.googleusercontent.com',
+    iosBundleId: 'com.example.yenibisim',
   );
 }

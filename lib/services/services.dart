@@ -4,6 +4,7 @@ import 'package:yenibisim/model/model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
+
 class ApiService {
   
   Future<UserModel?> getUser() async {
@@ -16,6 +17,8 @@ class ApiService {
         ? null
         : UserModel.fromJson(data as Map<String, dynamic>);
   }
+
+
 }
 
 final userProvider = Provider<ApiService>((ref) => ApiService());

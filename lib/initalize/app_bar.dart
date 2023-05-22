@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yenibisim/core/credit_card_loading.dart';
+import 'package:yenibisim/home/core/fault_notification_widget.dart';
+import 'package:yenibisim/initalize/app_initialize.dart';
 
 import 'package:yenibisim/product/constant/string_constant.dart';
 import 'package:yenibisim/widgets/button_widget.dart';
@@ -7,12 +10,12 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   const MyAppBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(190);
+  Size get preferredSize => const Size.fromHeight(130);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 200,
+      toolbarHeight: 130,
       backgroundColor: Colors.grey[200],
       title: Column(
         children: [
@@ -169,10 +172,6 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 13,
-          ),
-          ButtonWidget()
         ],
       ),
     );

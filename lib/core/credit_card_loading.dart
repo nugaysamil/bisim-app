@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:yenibisim/model/card_info_model.dart';
 
 import '../product/constant/string_constant.dart';
 import 'companents/card_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'companents/subscriber_comp.dart';
 
 class CreditCard extends StatefulWidget {
@@ -14,6 +18,8 @@ class CreditCard extends StatefulWidget {
 class _CreditCardState extends State<CreditCard> {
   int topic = 0;
   List<int> myItems = [50, 60, 100, 120, 150];
+
+
 
   @override
   Widget build(BuildContext context) {

@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:yenibisim/home/announcement_widget.dart';
+import 'package:yenibisim/home/companenets/current_price_details.dart';
 
 import '../product/constant/string_constant.dart';
-import 'companenets/current_price_details.dart';
 
 class CurrentPrice extends StatelessWidget {
   const CurrentPrice({super.key});
@@ -16,8 +17,8 @@ class CurrentPrice extends StatelessWidget {
       height: 340,
       child: OutlinedButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CurrentPriceDetails()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CurrentPriceDetails()));
         },
         child: Column(
           children: [
