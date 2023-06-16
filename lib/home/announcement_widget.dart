@@ -54,7 +54,7 @@ class AnnouncementWidget extends StatelessWidget {
             ),
           ),
         ),
-         CurrentPrice(),
+        CurrentPrice(),
       ],
     );
   }

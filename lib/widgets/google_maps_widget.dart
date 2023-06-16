@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +16,6 @@ import 'package:yenibisim/widgets/bicycle_list_details.dart';
 import 'package:yenibisim/widgets/button_widget.dart';
 
 import '../data_provider/data_provider.dart';
-import '../home/core/credit_card_password.dart';
 import '../initalize/app_bar.dart';
 import 'build_sheet.dart';
 
@@ -27,8 +25,6 @@ class GoogleMaps extends ConsumerStatefulWidget {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _GoogleMapsState();
 }
-
-double distance = 0.0;
 
 Set<Marker> _markers = {};
 
@@ -40,7 +36,7 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
   String mapTheme = '';
 
   static CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(38.432, 27.1368), //izmir kordon
+    target: LatLng(38.432, 27.1368), 
     zoom: 14.4746,
   );
 
@@ -68,6 +64,8 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
     markerIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(), "assets/location-2.png");
   }
+
+
 
   double zoomVal = 5.0;
   @override
@@ -193,7 +191,11 @@ class _GoogleMapsState extends ConsumerState<GoogleMaps> {
               elevation: 10,
               backgroundColor: Colors.white,
               onPressed: () {
-               
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FaultNotification(),
+                    ));
               },
               child: Image.asset('assets/icons/settings.png'),
             ),

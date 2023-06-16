@@ -1,18 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_element
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yenibisim/data_provider/data_provider.dart';
-import 'package:yenibisim/initalize/app_initialize.dart';
 import 'package:yenibisim/model/all_list.dart';
 
 import 'package:yenibisim/product/constant/index.dart';
 
-import '../../model/model.dart';
-import '../../widgets/button_widget.dart';
 import '../../widgets/details_appbar_widget.dart';
 import '../../widgets/details_basic_text.dart';
 
@@ -31,13 +27,6 @@ class _FaultNotificationState extends ConsumerState<FaultNotification> {
   @override
   Widget build(BuildContext context) {
     TextEditingController descriptionController = TextEditingController();
-
-    void saveToDescription() {
-      CollectionReference descriptionRef =
-          FirebaseFirestore.instance.collection('faultNotification');
-
-      descriptionRef.add({'description': descriptionController.text});
-    }
 
     void showSuccessDialog() {
       showDialog(
@@ -59,16 +48,21 @@ class _FaultNotificationState extends ConsumerState<FaultNotification> {
       );
     }
 
-    void writeToFirestore(String value) {
-      final firestoreInstance =
-          FirebaseFirestore.instance.collection('faultNotification');
+  void saveToDescription(String value, String value2) async {
+  final user = FirebaseAuth.instance.currentUser;
+  final userId = user!.uid;
 
-      firestoreInstance.doc().set({'value': value}).then((value) {
-        showSuccessDialog();
-      }).catchError((error) {
-        print('Veriyi Firestore\'a yazarken bir hata oluştu: $error');
-      });
-    }
+  CollectionReference descriptionRef =
+      FirebaseFirestore.instance.collection('faultNotification');
+
+  await descriptionRef.doc(userId).set({
+    'description': descriptionController.text,
+    'selectedStation': value,
+    'selectedFault': value2
+  });
+
+  showSuccessDialog();
+}
 
     return Scaffold(
       appBar: DetailsAppBar(detailsText: StringConstants.faultNotification),
@@ -121,8 +115,12 @@ class _FaultNotificationState extends ConsumerState<FaultNotification> {
               controller: descriptionController,
               decoration: InputDecoration(
                 hintText: StringConstants.explation,
-                contentPadding: EdgeInsets.fromLTRB(0, 20, 5,
-                    50), // Boyutu ayarlamak için contentPadding kullanın
+                contentPadding: EdgeInsets.fromLTRB(
+                  0,
+                  20,
+                  5,
+                  50,
+                ),
               ),
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
@@ -131,8 +129,7 @@ class _FaultNotificationState extends ConsumerState<FaultNotification> {
             padding: const EdgeInsets.all(8.0),
             child: DropdownButton<String>(
               value: selectedFault,
-              isExpanded: true, // Yeni eklenen özellik
-
+              isExpanded: true,
               hint: Text(
                 'Arıza Seç',
                 style: TextStyle(fontStyle: FontStyle.normal),
@@ -153,9 +150,8 @@ class _FaultNotificationState extends ConsumerState<FaultNotification> {
           SizedBox(height: 5),
           FilledButton(
             onPressed: () {
-              writeToFirestore(dropDownItemValue.toString());
-              writeToFirestore(selectedFault.toString());
-              saveToDescription();
+              saveToDescription(
+                  dropDownItemValue.toString(), selectedFault.toString());
             },
             child: Text(
               StringConstants.sendText,
@@ -177,3 +173,18 @@ class _FaultNotificationState extends ConsumerState<FaultNotification> {
     );
   }
 }
+
+
+
+    /*  void saveDataToFirebase() {
+    CollectionReference collRef =
+        FirebaseFirestore.instance.collection('cards');
+
+    collRef.add({
+      'cardNumber': cardController.text,
+      'fullName': nameController.text,
+      'cvv': cvController.text,
+      'expirationDate': dateController.text,
+    });
+    showSuccessDialog();
+  } */

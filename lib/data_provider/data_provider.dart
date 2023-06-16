@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 final singleUserDataProvider = FutureProvider<UserModel?>((ref) async {
-  // ignore: non_constant_identifier_names
   final ApiService = ref.watch(userProvider);
   return ApiService.getUser();
 });
@@ -15,10 +14,3 @@ final singleUserDataProvider = FutureProvider<UserModel?>((ref) async {
 
 
 
-
-
-/* final userDataProvider = FutureProvider<List<UserModel>?>((ref) async {
-  // ignore: non_constant_identifier_names
-  final ApiService = ref.watch(userProvider);
-  return ApiService.getUsers();
-}); */

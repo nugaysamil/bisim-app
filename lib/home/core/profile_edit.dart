@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -16,6 +18,43 @@ class ProfileEdit extends StatefulWidget {
 class _ProfileEditState extends State<ProfileEdit> {
   String? selectedFault;
   String? selectedDistrict;
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  void saveToDescription(String value, String value2) {
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user!.uid;
+    CollectionReference descriptionRef =
+        FirebaseFirestore.instance.collection('profileEdit');
+
+    descriptionRef.doc(userId).set({
+      'email': emailcontroller.text,
+      'country': value,
+      'district': value2,
+      'description': descriptionController.text,
+    });
+    showSuccessDialog();
+  }
+
+  void showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Başarılı'),
+          content: Text('Veriler başarıyla kaydedildi.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Tamam'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +65,7 @@ class _ProfileEditState extends State<ProfileEdit> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
+              controller: emailcontroller,
               style: TextStyle(
                 fontStyle: FontStyle.normal,
               ),
@@ -46,7 +86,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               value: selectedFault,
               isExpanded: true,
               hint: Text(
-                'Arıza Seç',
+                'İl seç',
                 style: TextStyle(fontStyle: FontStyle.normal),
               ),
               onChanged: (newValue) {
@@ -91,23 +131,28 @@ class _ProfileEditState extends State<ProfileEdit> {
                 },
               ).toList(),
               underline: Container(
-                height: 2, // Alt çizgi yüksekliği
-                color: Colors.black, // Alt çizgi rengi
+                height: 2,
+                color: Colors.black,
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextFormField(
+              controller: descriptionController,
               decoration: InputDecoration(
                 hintText: StringConstants.explation,
-                contentPadding: EdgeInsets.fromLTRB(0, 20, 5,
-                    50), // Boyutu ayarlamak için contentPadding kullanın
+                contentPadding: EdgeInsets.fromLTRB(0, 20, 5, 50),
               ),
               style: TextStyle(fontStyle: FontStyle.normal),
             ),
           ),
-          ButtonWidget(changeString: StringConstants.sendText, onPressed: () {})
+          ButtonWidget(
+              changeString: StringConstants.sendText,
+              onPressed: () {
+                saveToDescription(
+                    selectedFault.toString(), selectedDistrict.toString());
+              })
         ],
       ),
     );

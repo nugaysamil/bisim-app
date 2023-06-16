@@ -1,14 +1,13 @@
 // ignore_for_file: unused_local_variable, unused_element
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data_provider/data_provider.dart';
 import '../home/announcement_widget.dart';
 
 import '../home/menu_items.dart';
 import '../widgets/google_maps_widget.dart';
-
 
 class MapSample extends ConsumerStatefulWidget {
   const MapSample({super.key});

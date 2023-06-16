@@ -1,10 +1,11 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yenibisim/core/credit_card_loading.dart';
-import 'package:yenibisim/home/core/fault_notification_widget.dart';
-import 'package:yenibisim/initalize/app_initialize.dart';
+import 'package:yenibisim/initalize/readfromfirebase.dart';
 
 import 'package:yenibisim/product/constant/string_constant.dart';
-import 'package:yenibisim/widgets/button_widget.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -12,9 +13,12 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(130);
 
+
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       toolbarHeight: 130,
       backgroundColor: Colors.grey[200],
       title: Column(
@@ -159,13 +163,8 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                       SizedBox(
                         height: 8,
                       ),
-                      Text(
-                        '₺ 0.0',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey[900],
-                        ),
-                      ),
+                      
+                     ReadFromFirebase()
                     ],
                   ),
                 ),

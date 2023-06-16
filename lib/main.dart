@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yenibisim/auth/auth.dart';
-import 'package:yenibisim/auth/login_or_register.dart';
-import 'package:yenibisim/home/core/fault_notification_widget.dart';
-import 'package:yenibisim/model/model.dart';
-import 'package:yenibisim/pages/login_page.dart';
+import 'package:yenibisim/initalize/app_initialize.dart';
 import 'package:yenibisim/pages/register_page.dart';
+import 'package:yenibisim/pages/slack/lottie_widget.dart';
 
 import 'firebase_options.dart';
-import 'home/menu_items.dart';
-import 'initalize/app_initialize.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MapSample(),
-      //home: MapSample(),
+      home: LottieWidget(),
     );
   }
 }

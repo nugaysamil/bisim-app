@@ -33,7 +33,9 @@ class _BicycleListDetailsState extends ConsumerState<BicycleListDetails> {
                     ),
                   );
                 }),
-                separatorBuilder: ((context, index) => Divider()),
+                separatorBuilder: ((context, index) => Divider(
+                      thickness: 6,
+                    )),
                 itemCount: data.network!.stations!.length);
           },
           error: (((error, stackTrace) {

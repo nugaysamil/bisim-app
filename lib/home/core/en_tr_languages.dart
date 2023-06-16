@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yenibisim/product/constant/index.dart';
-import 'package:yenibisim/widgets/button_widget.dart';
 
 import '../../widgets/details_appbar_widget.dart';
 

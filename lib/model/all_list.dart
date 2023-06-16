@@ -1,4 +1,5 @@
   
+  // ignore: camel_case_types
   class listAll {
   static final List<dynamic> itemList = [
     '0-1 sa.',

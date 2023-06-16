@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yenibisim/model/card_info_model.dart';
 
 import '../product/constant/string_constant.dart';
 import 'companents/card_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'companents/subscriber_comp.dart';
 
@@ -19,12 +18,29 @@ class _CreditCardState extends State<CreditCard> {
   int topic = 0;
   List<int> myItems = [50, 60, 100, 120, 150];
 
+  void saveTopicToFirestore(int topic) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user!.uid;
 
+    CollectionReference topicsRef =
+        FirebaseFirestore.instance.collection('topics');
+
+    await topicsRef.doc(userId).set({
+      'topic': topic,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+            setState(() {});
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
         backgroundColor: Colors.grey.shade900,
         title: Text('Kredi Yükle'),
       ),
@@ -87,6 +103,7 @@ class _CreditCardState extends State<CreditCard> {
                       setState(() {
                         topic = myItems[index];
                       });
+                      saveTopicToFirestore(topic);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

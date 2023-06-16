@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:yenibisim/initalize/app_initialize.dart';
 
-import '../../home/core/fault_notification_widget.dart';
-import '../../model/card_info_model.dart';
-import '../../product/constant/string_constant.dart';
-import '../../widgets/button_widget.dart';
 import 'input_formatters.dart';
 
 class CardScreen extends StatefulWidget {
@@ -17,7 +13,6 @@ class CardScreen extends StatefulWidget {
 }
 
 class _CardScreenState extends State<CardScreen> {
-
   TextEditingController cardNumberController = TextEditingController();
   final cardController = TextEditingController();
   final nameController = TextEditingController();
@@ -25,17 +20,45 @@ class _CardScreenState extends State<CardScreen> {
   final dateController = TextEditingController();
 
   void saveDataToFirebase() {
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user!.uid;
     CollectionReference collRef =
         FirebaseFirestore.instance.collection('cards');
 
-    collRef.add({
+    collRef.doc(userId).set({
       'cardNumber': cardController.text,
       'fullName': nameController.text,
       'cvv': cvController.text,
       'expirationDate': dateController.text,
     });
+    showSuccessDialog();
   }
 
+  void showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Başarılı'),
+          content: Text('Veriler başarıyla kaydedildi.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Tamam'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
